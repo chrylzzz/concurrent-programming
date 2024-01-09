@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.FutureTask;
 
 /**
  * Thread Simple
@@ -28,7 +29,12 @@ public class ConcurrentTemplate {
      */
     public void contextLoads() {
         for (int x = 0; x < USER_NUMS; x++) {
-            new Thread((Runnable) new ASRRequest()).start();
+//            new Thread((Runnable) new ASRRequest()).start();
+
+            FutureTask futureTask = new FutureTask(new ASRRequest());
+            new Thread(futureTask).start();
+
+
             COUNTDOWNLATCH.countDown();
         }
     }
